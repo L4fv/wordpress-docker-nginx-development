@@ -7,7 +7,7 @@ services:
       - .env
     environment:
       - TZ='America/Lima'
-    restart: 'always'
+    restart: unless-stopped
     ports:
       - ${ENV_PORT_DB}:3306
     volumes:
@@ -20,7 +20,7 @@ services:
     depends_on:
       - mysql
     image: adminer
-    restart: always
+    restart: unless-stopped
     environment:
       - ADMINER_DEFAULT_SERVER=mysql
     ports:
@@ -34,7 +34,7 @@ services:
     image: wordpress:php7.3-fpm-alpine
     ports:
       - ${ENV_PORT_WORDPRESS}:80
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./public:/var/www/html
     environment:
