@@ -3,7 +3,8 @@ version: '3.5'
 services:
   mysql:
     image: mariadb:latest
-    env_file: .env
+    env_file:
+      - .env
     environment:
       - TZ='America/Lima'
     restart: 'always'
@@ -20,7 +21,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - $ENV_PORT_ADMINER:8080
+      - ${ENV_PORT_ADMINER}:8080
     networks:
       - APP_NETWORK
 
@@ -29,21 +30,21 @@ services:
       - mysql
     image: wordpress:php7.3-fpm-alpine
     ports:
-      - $ENV_PORT_WORDPRESS:80
+      - ${ENV_PORT_WORDPRESS}:80
     restart: always
     volumes:
       - ./public:/var/www/html
-    env_file: .env
+    env_file:
+      - .env
     environment:
-      WORDPRESS_DB_HOST: mysql
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      WORDPRESS_DB_NAME: $MYSQL_DATABASE
-      WORDPRESS_DB_USER: $MYSQL_USER
-      WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
-      WORDPRESS_TABLE_PREFIX: wp_
+      - WORDPRESS_DB_HOST=mysql
+      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
+      - WORDPRESS_TABLE_PREFIX=wp_
     networks:
       - APP_NETWORK
 
 networks:
   APP_NETWORK:
-    name: $APP_NETWORK
+    name: ${APP_NETWORK}
