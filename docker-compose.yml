@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-  mysql:
+  db:
     image: mysql:5.7
     env_file:
       - .env
@@ -17,35 +17,34 @@ services:
     networks:
       - APP_NETWORK
 
-  adminer:
-    depends_on:
-      - mysql
-    image: adminer
-    restart: unless-stopped
-    environment:
-      - ADMINER_DEFAULT_SERVER=mysql
-    ports:
-      - ${ENV_PORT_ADMINER}:8080
-    networks:
-      - APP_NETWORK
-
   wordpress:
     image: wordpress:php7.3-fpm-alpine
     volumes:
       - ./public:/var/www/html
     depends_on:
-      - mysql
+      - db
     ports:
       - ${ENV_PORT_WORDPRESS}:80
     restart: unless-stopped
 
     environment:
-      - WORDPRESS_DB_HOST=mysql
+      - WORDPRESS_DB_HOST=db
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
-      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_USER=${MYSQL_ROOT_USER}
       - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
-      - WORDPRESS_TABLE_PREFIX=wp_
+    networks:
+      - APP_NETWORK
+
+  adminer:
+    depends_on:
+      - db
+    image: adminer
+    restart: unless-stopped
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    ports:
+      - ${ENV_PORT_ADMINER}:8080
     networks:
       - APP_NETWORK
 
