@@ -1,21 +1,21 @@
-version: '3.5'
+version: '3.7'
 
 services:
   db:
     image: mysql:5.7
-    env_file:
+    MY_ENV_file:
       - .env
     environment:
       - TZ='America/Lima'
     restart: unless-stopped
     ports:
-      - ${ENV_PORT_DB}:3306
+      - ${MY_ENV_PORT_DB}:3306
     volumes:
-      - ./db:/var/lib/mysql
-      - ./my-config:/etc/mysql/conf.d
+      - ./db_data:/var/lib/mysql
+      #- ./my-config:/etc/mysql/conf.d
     command: --default-authentication-plugin=mysql_native_password
     networks:
-      - APP_NETWORK
+      - MY_ENV_APP_NETWORK
 
   wordpress:
     image: wordpress:php7.3-fpm-alpine
@@ -24,17 +24,15 @@ services:
     depends_on:
       - db
     ports:
-      - ${ENV_PORT_WORDPRESS}:80
+      - ${MY_ENV_PORT_WORDPRESS}:80
     restart: unless-stopped
-
     environment:
-      - WORDPRESS_DB_HOST=db
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - WORDPRESS_DB_HOST=db${MY_ENV_PORT_DB}
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
-      - WORDPRESS_DB_USER=${MYSQL_ROOT_USER}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
       - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
     networks:
-      - APP_NETWORK
+      - MY_ENV_APP_NETWORK
 
   adminer:
     depends_on:
@@ -44,11 +42,10 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=db
     ports:
-      - ${ENV_PORT_ADMINER}:8080
+      - ${MY_ENV_PORT_ADMINER}:8080
     networks:
-      - APP_NETWORK
+      - MY_ENV_APP_NETWORK
 
 networks:
-  APP_NETWORK:
-    name: ${APP_NETWORK}
-    driver: bridge
+  MY_ENV_APP_NETWORK:
+    name: ${MY_ENV_APP_NETWORK}
