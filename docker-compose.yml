@@ -9,7 +9,7 @@ services:
       - TZ='America/Lima'
     restart: 'always'
     ports:
-      - 3307:3306
+      - $ENV_PORT_DB:3306
     volumes:
       - ./db:/var/lib/mysql
       - ./my-config:/etc/mysql/conf.d
@@ -31,7 +31,7 @@ services:
       - ./public:/var/www/html
     env_file: .env
     environment:
-      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_HOST: db:$ENV_PORT_DB
       WORDPRESS_DB_USER: $MYSQL_USER
       WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
       WORDPRESS_DB_NAME: $MYSQL_DATABASE
