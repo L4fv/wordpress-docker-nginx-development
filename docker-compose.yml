@@ -2,14 +2,12 @@ version: '3.5'
 
 services:
   mysql:
-    image: mariadb:latest
+    image: mariadb
     env_file:
       - .env
     environment:
       - TZ='America/Lima'
     restart: unless-stopped
-    ports:
-      - ${ENV_PORT_DB}:3306
     volumes:
       - ./db:/var/lib/mysql
       - ./my-config:/etc/mysql/conf.d
