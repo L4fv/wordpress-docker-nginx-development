@@ -13,7 +13,6 @@ services:
     volumes:
       - ./db:/var/lib/mysql
       - ./my-config:/etc/mysql/conf.d
-    command: --default-authentication-plugin=mysql_native_password
     networks:
       - APP_NETWORK
 
