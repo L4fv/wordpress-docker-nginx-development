@@ -11,12 +11,18 @@ services:
       - ./db:/var/lib/mysql
       - ./my-config:/etc/mysql/conf.d
     command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - APP_NETWORK
 
   adminer:
+    depends_on:
+      - mysql
     image: adminer
     restart: always
     ports:
       - $ENV_PORT_ADMINER:8080
+    networks:
+      - APP_NETWORK
 
   wordpress:
     depends_on:
@@ -35,5 +41,9 @@ services:
       WORDPRESS_DB_USER: $MYSQL_USER
       WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
       WORDPRESS_TABLE_PREFIX: wp_
-    links:
-      - mysql
+    networks:
+      - APP_NETWORK
+
+networks:
+  APP_NETWORK:
+    name: $APP_NETWORK
