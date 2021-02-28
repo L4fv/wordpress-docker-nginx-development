@@ -22,6 +22,8 @@ services:
       - mysql
     image: adminer
     restart: always
+    environment:
+      - ADMINER_DEFAULT_SERVER=mysql
     ports:
       - ${ENV_PORT_ADMINER}:8080
     networks:
@@ -36,8 +38,6 @@ services:
     restart: always
     volumes:
       - ./public:/var/www/html
-    env_file:
-      - .env
     environment:
       - WORDPRESS_DB_HOST=mysql
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
