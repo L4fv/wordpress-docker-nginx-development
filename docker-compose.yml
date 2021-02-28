@@ -8,6 +8,8 @@ services:
     environment:
       - TZ='America/Lima'
     restart: 'always'
+    ports:
+      - ${ENV_PORT_DB}:3306
     volumes:
       - ./db:/var/lib/mysql
       - ./my-config:/etc/mysql/conf.d
