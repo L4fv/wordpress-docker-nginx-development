@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   mysql:
-     image: mysql:5.7
+    image: mysql:5.7
     env_file:
       - .env
     environment:
@@ -52,4 +52,3 @@ networks:
   APP_NETWORK:
     name: ${APP_NETWORK}
     driver: bridge
-
