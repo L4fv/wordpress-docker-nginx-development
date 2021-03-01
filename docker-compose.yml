@@ -8,17 +8,15 @@ services:
     environment:
       - TZ='America/Lima'
     restart: always
-    #  ports:
-    #    - ${MY_ENV_PORT_DB}:3306
     volumes:
       - ./db_data:/var/lib/mysql
       #- ./my-config:/etc/mysql/conf.d
-    command: --default-authentication-plugin=mysql_native_password
+    #command: --default-authentication-plugin=mysql_native_password
 
   wordpress:
-    image: wordpress:latest
+    image: wordpress:5
     volumes:
-      - ./public:/var/www/html
+      - ./public/www:/var/www/html
     depends_on: ['db']
     links: ['db']
     ports: ['${MY_ENV_PORT_WORDPRESS}:80']

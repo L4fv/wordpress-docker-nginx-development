@@ -4,7 +4,7 @@ services:
   wordpress-fpm:
     image: wordpress:5-fpm-alpine
     volumes:
-      - ./public:/var/www/html
+      - ./public/www:/var/www/html
     depends_on: ['db']
     links: ['db']
     #ports: ['${MY_ENV_PORT_WORDPRESS}:80']
