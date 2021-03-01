@@ -4,7 +4,7 @@ services:
   wordpress_fpm:
     image: wordpress:5-fpm-alpine
     volumes:
-      - ./public:/var/www/html
+      - ./fpm:/var/www/html
     depends_on: ['db']
     links: ['db']
     restart: always
@@ -20,4 +20,4 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ./public:/var/www/html
     ports: ['${MY_ENV_NGINX}:80']
-    links: ['wordpress-fpm']
+    links: ['wordpress_fpm']
