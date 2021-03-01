@@ -8,6 +8,7 @@ services:
     depends_on: ['db']
     links: ['db']
     restart: always
+    ports: ['${MY_ENV_PORT_FPM}:9000']
     environment:
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
