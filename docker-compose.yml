@@ -24,6 +24,7 @@ services:
       - db
     expose:
       - 80
+      - 443
     #ports:
     #- ${MY_ENV_PORT_WORDPRESS}:80
     #- ${MY_ENV_PORT_FPM}:9000
