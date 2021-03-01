@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  wordpress:
+    image: wordpress:5.6.2-fpm-alpine
+    #image: wordpress:latest
+    volumes:
+      - ./public:/var/www/html
+    depends_on: ['db']
+    links: ['db']
+    #ports: ['${MY_ENV_PORT_WORDPRESS}:80']
+    ports: ['${MY_ENV_PORT_FPM}:9000']
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
+      - VIRTUAL_PROTO=https
+      - VIRTUAL_HOST=${MY_VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${MY_LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${MY_LETSENCRYPT_EMAIL}
