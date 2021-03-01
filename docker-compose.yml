@@ -21,6 +21,8 @@ services:
       - ./public:/var/www/html
     depends_on:
       - db
+    expose:
+      - 80
     ports:
       #- ${MY_ENV_PORT_WORDPRESS}:80
       - ${MY_ENV_PORT_FPM}:9000
@@ -30,6 +32,9 @@ services:
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
       - WORDPRESS_DB_USER=${MYSQL_USER}
       - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
+      - VIRTUAL_HOST=${MY_VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${MY_LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${MY_LETSENCRYPT_EMAIL}
 
   adminer:
     depends_on:
