@@ -16,16 +16,14 @@ services:
     command: --default-authentication-plugin=mysql_native_password
 
   wordpress:
-    #image: wordpress:php7.3-fpm-alpine
-    image: wordpress:latest
+    image: wordpress:php7.3-fpm-alpine
+    #image: wordpress:latest
     volumes:
       - ./public:/var/www/html
     depends_on: ['db']
     links: ['db']
-    ports: ['${MY_ENV_PORT_WORDPRESS}:80']
-    #ports:
-    #- ${MY_ENV_PORT_WORDPRESS}:80
-    #- ${MY_ENV_PORT_FPM}:9000
+    #ports: ['${MY_ENV_PORT_WORDPRESS}:80']
+    ports: ['${MY_ENV_PORT_FPM}:9000']
     restart: always
     environment:
       - WORDPRESS_DB_HOST=db:3306
