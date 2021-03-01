@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  wordpress:
+  wordpress-fpm:
     image: wordpress:5.6.2-fpm-alpine
     #image: wordpress:latest
     volumes:
