@@ -28,10 +28,6 @@ services:
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
       - WORDPRESS_DB_USER=${MYSQL_USER}
       - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
-      - VIRTUAL_PROTO=https
-      - VIRTUAL_HOST=${MY_VIRTUAL_HOST}
-      - LETSENCRYPT_HOST=${MY_LETSENCRYPT_HOST}
-      - LETSENCRYPT_EMAIL=${MY_LETSENCRYPT_EMAIL}
 
   adminer:
     depends_on:
@@ -42,8 +38,3 @@ services:
       - ADMINER_DEFAULT_SERVER=db
     ports:
       - ${MY_ENV_PORT_ADMINER}:8080
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
