@@ -19,6 +19,7 @@ services:
       - ./public:/var/www/html
     depends_on: ['db']
     links: ['db']
+    ports: ['${MY_ENV_PORT_WORDPRESS}:80']
     restart: always
     environment:
       - WORDPRESS_DB_HOST=db:3306
