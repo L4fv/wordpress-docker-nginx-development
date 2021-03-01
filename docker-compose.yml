@@ -25,9 +25,10 @@ services:
       - db
     ports:
       - ${MY_ENV_PORT_WORDPRESS}:80
+      - ${MY_ENV_PORT_FPM}:9000
     restart: unless-stopped
     environment:
-      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_HOST=db:${MY_ENV_PORT_DB}
       - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
       - WORDPRESS_DB_USER=${MYSQL_USER}
       - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
