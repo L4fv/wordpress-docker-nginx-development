@@ -17,6 +17,7 @@ services:
     image: wordpress:5.6.2-php7.3-fpm-alpine
     volumes:
       - ./data/html:/var/www/html
+      - ./config/php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     depends_on: ['db']
     links: ['db']
     restart: always
