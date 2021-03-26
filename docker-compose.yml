@@ -17,6 +17,7 @@ services:
     depends_on:
       - db
       - redis
+    expose: 80
     environment:
       - OWNCLOUD_DOMAIN=${OWNCLOUD_DOMAIN}
       - OWNCLOUD_DB_TYPE=mysql
@@ -73,6 +74,6 @@ services:
     image: nginx:alpine
     ports: ['${MY_ENV_NGINX}:80']
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx.conf:/etc/nginx/nginx.conf
     links:
       - owncloud
