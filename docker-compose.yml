@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
       - redis
-    expose: 80
+    expose: [80]
     environment:
       - OWNCLOUD_DOMAIN=${OWNCLOUD_DOMAIN}
       - OWNCLOUD_DB_TYPE=mysql
